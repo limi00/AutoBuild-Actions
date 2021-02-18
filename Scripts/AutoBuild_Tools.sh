@@ -49,7 +49,7 @@ AutoExpand_UI() {
 	uci set fstab.@global[0].auto_swap='0'
 	uci commit fstab
 	clear
-	echo -e "Newifi-D2 一键扩展内部空间\n"
+	echo -e "XiaomiR3G 一键扩展内部空间\n"
 	USB_Check_Core
 	if [[ ! -z "${Check_Disk}" ]];then
 		for ((i=1;i<=${Disk_Number};i++));
