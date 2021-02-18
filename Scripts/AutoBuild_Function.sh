@@ -5,7 +5,7 @@
 
 GET_TARGET_INFO() {
 	[ -f ${GITHUB_WORKSPACE}/Openwrt.info ] && . ${GITHUB_WORKSPACE}/Openwrt.info
-	Default_File="package/lean/default-settings/files/zzz-default-settings"
+	Default_File="package/default-settings/files/zzz-default-settings"
 	[ -f ${Default_File} ] && Lede_Version="$(egrep -o "R[0-9]+\.[0-9]+\.[0-9]+" ${Default_File})"
 	[[ -z ${Lede_Version} ]] && Lede_Version="Unknown"
 	Openwrt_Version="${Lede_Version}-${Compile_Date}"
@@ -25,16 +25,16 @@ Diy_Part1_Base() {
 		ExtraPackages git lean helloworld https://github.com/fw876 master
 		sed -i 's/143/143,25,5222/' package/lean/helloworld/luci-app-ssr-plus/root/etc/init.d/shadowsocksr
 	fi
-	if [[ "${INCLUDE_HelloWorld}" == "true" ]];then
+	if [[ "${INCLUDE_HelloWorld}" == "false" ]];then
 		ExtraPackages git lean luci-app-vssr https://github.com/jerrykuku master
 		ExtraPackages git lean lua-maxminddb https://github.com/jerrykuku master
 	fi
-	if [[ "${INCLUDE_Bypass}" == "true" ]];then
+	if [[ "${INCLUDE_Bypass}" == "false" ]];then
 		ExtraPackages git other luci-app-bypass https://github.com/garypang13 main
 		find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-redir/shadowsocksr-libev-alt/g' {}
 		find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-server/shadowsocksr-libev-server/g' {}
 	fi
-	if [[ "${INCLUDE_OpenClash}" == "true" ]];then
+	if [[ "${INCLUDE_OpenClash}" == "false" ]];then
 		ExtraPackages git other OpenClash https://github.com/vernesong master
 	fi
 	if [[ "${INCLUDE_Keep_Latest_Xray}" == "true" ]];then
