@@ -54,7 +54,7 @@ jobs:
 
     - name: Clone Openwrt source code
       run: |
-        git clone -b master $REPO_URL openwrt
+        git clone -b 19.07 $REPO_URL openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: Run Diy-Part1 Scripts
