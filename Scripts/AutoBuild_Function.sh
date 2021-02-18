@@ -6,9 +6,9 @@
 GET_TARGET_INFO() {
 	[ -f ${GITHUB_WORKSPACE}/Openwrt.info ] && . ${GITHUB_WORKSPACE}/Openwrt.info
 	Default_File="package/default-settings/files/zzz-default-settings"
-	[ -f ${Default_File} ] && Lede_Version="$(egrep -o "R[0-9]+\.[0-9]+\.[0-9]+" ${Default_File})"
-	[[ -z ${Lede_Version} ]] && Lede_Version="Unknown"
-	Openwrt_Version="${Lede_Version}-${Compile_Date}"
+	[ -f ${Default_File} ] && Lienol_Version="$(egrep -o "R[0-9]+\.[0-9]+\.[0-9]+" ${Default_File})"
+	[[ -z ${Lienol_Version} ]] && Lienol_Version="Unknown"
+	Openwrt_Version="${Lienol_Version}-${Compile_Date}"
 	TARGET_PROFILE="$(egrep -o "CONFIG_TARGET.*DEVICE.*=y" .config | sed -r 's/.*DEVICE_(.*)=y/\1/')"
 	[[ -z "${TARGET_PROFILE}" ]] && TARGET_PROFILE="${Default_Device}"
 	TARGET_BOARD="$(awk -F '[="]+' '/TARGET_BOARD/{print $2}' .config)"
@@ -21,7 +21,7 @@ Diy_Part1_Base() {
 	Mkdir package/lean
 	[ -f "${GITHUB_WORKSPACE}/Customize/banner" ] && Replace_File Customize/banner package/base-files/files/etc
 	[ -f "${GITHUB_WORKSPACE}/Customize/mac80211.sh" ] && Replace_File Customize/mac80211.sh package/kernel/mac80211/files/lib/wifi
-	if [[ "${INCLUDE_SSR_Plus}" == "true" ]];then
+	if [[ "${INCLUDE_SSR_Plus}" == "false" ]];then
 		ExtraPackages git lean helloworld https://github.com/fw876 master
 		sed -i 's/143/143,25,5222/' package/lean/helloworld/luci-app-ssr-plus/root/etc/init.d/shadowsocksr
 	fi
@@ -48,7 +48,7 @@ Diy_Part1_Base() {
 	if [[ "${INCLUDE_Passwall}" == "true" ]];then
 		ExtraPackages git lienol openwrt-passwall https://github.com/xiaorouji main
 	fi
-	if [[ "${INCLUDE_mt7621_OC1000MHz}" == "true" ]];then
+	if [[ "${INCLUDE_mt7621_OC1000MHz}" == "false" ]];then
 		Replace_File Customize/102-mt7621-fix-cpu-clk-add-clkdev.patch target/linux/ramips/patches-5.4
 	fi
 }
@@ -126,7 +126,7 @@ ExtraPackages() {
 		git)
 		
 			if [[ -z "${REPO_BRANCH}" ]];then
-				REPO_BRANCH="master"
+				REPO_BRANCH="19.07"
 			fi
 			git clone -b ${REPO_BRANCH} ${REPO_URL}/${PKG_NAME} ${PKG_NAME} > /dev/null 2>&1
 		;;
