@@ -5,12 +5,12 @@
 
 Diy_Core() {
 	Author=Hyy2001
-	Default_Device=d-team_newifi-d2
+	Default_Device=xiaomi_mir3g
 
 	INCLUDE_AutoUpdate=true
 	INCLUDE_AutoBuild_Tools=true
 	INCLUDE_Keep_Latest_Xray=true
-	INCLUDE_mt7621_OC1000MHz=true
+	INCLUDE_mt7621_OC1000MHz=false
 	INCLUDE_Enable_FirewallPort_53=true
 
 	INCLUDE_SSR_Plus=true
@@ -23,8 +23,8 @@ Diy_Core() {
 Diy-Part1() {
 	Diy_Part1_Base
 
-	if [ "${Default_Device}" == "d-team_newifi-d2" ];then
-		Replace_File Customize/system_newifi-d2 package/base-files/files/etc/config system
+	if [ "${Default_Device}" == "xiaomi_mir3g" ];then
+		Replace_File Customize/system_xiaomi_mir3g package/base-files/files/etc/config system
 	else
 		Replace_File Customize/system_common package/base-files/files/etc/config system
 	fi
@@ -41,11 +41,11 @@ Diy-Part1() {
 	# ExtraPackages svn kernel mt76 https://github.com/openwrt/openwrt/trunk/package/kernel
 
 	ExtraPackages git lean luci-theme-argon https://github.com/jerrykuku 18.06
-	ExtraPackages git other luci-app-argon-config https://github.com/jerrykuku master
+	# ExtraPackages git other luci-app-argon-config https://github.com/jerrykuku master
 	ExtraPackages git other luci-app-adguardhome https://github.com/Hyy2001X master
-	ExtraPackages svn other luci-app-smartdns https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t
+	# ExtraPackages svn other luci-app-smartdns https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t
 	ExtraPackages git other luci-app-serverchan https://github.com/tty228 master
-	ExtraPackages svn other luci-app-socat https://github.com/Lienol/openwrt-package/trunk
+	# ExtraPackages svn other luci-app-socat https://github.com/Lienol/openwrt-package/trunk
 	ExtraPackages svn other luci-app-usb3disable https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw
 }
 
